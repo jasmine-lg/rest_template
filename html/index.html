@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Restaurant Name</title>
+        <link rel="stylesheet" type="text/css" href="../style/header.css">
+        <link rel="stylesheet" type="text/css" href="../style/footer.css">
+        <link rel="stylesheet" type="text/css" href="../style/body.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Link more stylesheets here -->
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+    </head>
+
+    <!-- Header goes here -->
+    <div class="Header">
+        <ul>
+            <li class="Title" style="float:left"><a class="active" href="#about">Famili Chinese Takeout</a></li>
+            <li><a href="#contact">About</a></li>
+            <li><a href="data/menu/menu.pdf" target="_blank">Menu</a></li>
+            <li><a href="#hours">Hours</a></li>
+            <li><a href="#about">Contact</a></li>
+        </ul>
+    </div>
+    <!-- Header ends here -->
+
+    <body>
+        <br>
+        <!-- Home page / Contact Info -->
+        <div class="Contact" id="Contact">
+            <p class="ContactText" id="ContactText"></p>
+        </div>
+
+        <br>
+        <!-- Hours -->
+        <div class="Hours" id="Hours">
+            <p class="HoursText" id="HoursText"></p>
+        </div>
+
+        <!-- Menu: Not implemented yet -->
+
+        <br>
+        <!-- About -->
+        <div class="About">
+            <div class="AboutPfp" id="AboutPfp">
+
+            </div>
+            <div class="AboutDesc" id="AboutDesc">
+
+            </div>
+        </div>
+    </body>
+
+    <!-- Footer goes here -->
+
+    <!-- Footer ends here -->
+
+    <script>
+        // Javascript for data loads
+
+        function load_contact_page() {
+            // Contact Page
+            $.getJSON("../data/json/contact.json", function(data) {
+                contact_info = data["data"][0];
+
+                // process data
+                phone = contact_info.Phone;
+                background_pic = contact_info.BackPicture;
+
+                // get contact div
+                var div = document.getElementById("Contact");
+
+                // set background picture
+                div.style.backgroundImage = 'url(..' + background_pic + ')';
+                div.style.backgroundSize = 'cover';
+				div.style.backgroundRepeat = 'no-repeat';
+
+                // display phone number
+                var text = document.getElementById("ContactText");
+                text.innerHTML = 'Call Us: ' + phone;
+            });
+        }
+
+        function load_hours_page() {
+            // Hours Page
+            $.getJSON("../data/json/hours.json", function(data) {
+                hours_info = data["data"][0];
+
+
+                // process data
+                sun = hours_info.Hours.Sunday;
+                mon = hours_info.Hours.Monday;
+                tue = hours_info.Hours.Tuesday;
+                wed = hours_info.Hours.Wednesday;
+                thu = hours_info.Hours.Thursday;
+                fri = hours_info.Hours.Friday;
+                sat = hours_info.Hours.Saturday;
+                background_pic = hours_info.Picture;
+
+                // get hours div
+                var div = document.getElementById("Hours");
+
+                // set background picture
+                div.style.backgroundImage = 'url(..' + background_pic + ')';
+                div.style.backgroundSize = 'cover';
+				div.style.backgroundRepeat = 'no-repeat';
+
+                // display phone number
+                var text = document.getElementById("HoursText");
+                text.innerHTML =
+                    'Hours: <br>' +
+                    'Sun: ' + sun + '<br>' +
+                    'Mon: ' + mon + '<br>' +
+                    'Tue: ' + tue + '<br>' +
+                    'Wed: ' + wed + '<br>' +
+                    'Thu: ' + thu + '<br>' +
+                    'Fri: ' + fri + '<br>' +
+                    'Sat: ' + sat + '<br>';
+            });
+        }
+
+        function load_about_page() {
+            // About Page
+            $.getJSON("../data/json/about.json", function(data) {
+                about_info = data["data"][0];
+
+                // process data
+                pfp = about_info.Picture;
+                desc = about_info.Description;
+
+                // get about pfp div
+                var pfp_div = document.getElementById("AboutPfp");
+
+                // set pfp
+                pfp_div.style.backgroundImage = 'url(..' + pfp + ')';
+                pfp_div.style.backgroundSize = 'contain';
+				pfp_div.style.backgroundRepeat = 'no-repeat';
+
+				// get about desc div
+				var pfp_desc = document.getElementById("AboutDesc");
+				pfp_desc.innerHTML = desc;
+
+            });
+        }
+
+        window.onload = load_contact_page();
+        window.onload = load_hours_page();
+        window.onload = load_about_page();
+
+    </script>
+
+</html>
